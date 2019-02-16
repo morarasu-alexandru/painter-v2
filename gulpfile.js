@@ -19,7 +19,7 @@ gulp.task('startServer', () => {
     gulp.watch('app/js/**/*.js', gulp.series('compileJs'));
     gulp.watch(staticFiles, gulp.series('compileStatics'));
 
-    gulp.watch(['app/**/*', '!app/**/*.scss']).on('change', browserSync.reload);
+    gulp.watch(['app/**/*', 'temp/js/**/*.js', '!app/**/*.scss', '!app/js/**/*.js']).on('change', browserSync.reload);
 });
 
 gulp.task('compileStatics', () => {

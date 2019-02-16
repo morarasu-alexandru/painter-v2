@@ -1,2 +1,123 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
 body {
-  background: #a9a9a9; }
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+html {
+  padding: 1.4em;
+  font-size: 10px; }
+
+.application {
+  background: #a9a9a9;
+  box-sizing: border-box; }
+
+.title {
+  font-size: 2.4rem;
+  font-weight: bold;
+  line-height: 1.5em;
+  letter-spacing: .2rem; }
+
+.description {
+  margin: 1rem 0 1.5rem; }
+
+.paintingForm {
+  padding-bottom: 2rem;
+  font-size: 1.4rem;
+  line-height: 1.125em; }
+
+.inputWrapper {
+  display: inline-block; }
+
+.paintingInput {
+  padding: .4rem 1rem;
+  margin: 0 .6rem 0 0;
+  line-height: 2.4rem;
+  border-radius: .4rem;
+  border: 0.1rem solid #9C27B0;
+  outline: none; }
+  .paintingInput:hover {
+    border-color: #3949AB; }
+  .paintingInput:focus {
+    padding: .3rem .9rem;
+    border-width: .2rem; }
+
+.inputContainer {
+  display: inline-block;
+  position: relative; }
+
+.error {
+  margin-top: .2rem;
+  position: absolute;
+  color: #E53935; }
+
+.text {
+  font-size: 1.6rem;
+  line-height: 1.35em; }
+
+.button {
+  padding: 0 1.4rem;
+  line-height: 3.2rem;
+  border: 0.1rem solid #9C27B0;
+  border-radius: .4rem;
+  background: #BA68C8;
+  cursor: pointer;
+  transition: background-color .333s;
+  outline: none; }
+  .button:hover {
+    background: #CE93D8;
+    border-color: #3949AB; }
+  .button:active, .button:focus {
+    background: #4A148C;
+    color: #C5CAE9; }
+
+.painter {
+  display: flex;
+  flex-flow: row;
+  flex-wrap: wrap;
+  box-sizing: unset; }
+
+.painter div {
+  width: 1px;
+  height: 1px; }

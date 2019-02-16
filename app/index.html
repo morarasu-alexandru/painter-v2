@@ -1,17 +1,39 @@
 <!doctype html>
-<html lang="en">
+<html id="html" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" >
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Painter</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body>
-    <p>Auto refresh on save</p>
-    <p>Scss file transpiles to css (it contains sourcemap)</p>
-    <p>js es6+ code transpiles to es5 (it contains sourcemap)</p>
+<body id="application" class="application">
+  <header class="header">
+    <h1 class="title">Painter</h1>
+  </header>
+  <main class="mainSection">
+    <div class="description">
+      <p class="text">Insert a desired width and height below in order to create a painting area</p>
+      <p class="text">Only numbers are accepted</p>
+      <p class="text">Minimum width and height is 10</p>
+    </div>
+    <form id="paintingForm" class="paintingForm">
+      <div class="inputWrapper">
+        <label class="paintingLabel" for="widthInput">Width:</label>
+        <div id="widthInputContainer" class="inputContainer">
+          <input id="widthInput" class="paintingInput" type="number">
+        </div>
+      </div>
+      <div id="heightInputWrapper" class="inputWrapper">
+        <label class="paintingLabel" for="heightInput">Height:</label>
+        <div id="heightInputContainer" class="inputContainer">
+          <input id="heightInput" class="paintingInput" type="number">
+        </div>
+      </div>
+      <button id="paintingSubmitButton" class="button">Submit</button>
+    </form>
+  </main>
 <script src="js/main.js"></script>
 </body>
 </html>

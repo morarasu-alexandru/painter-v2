@@ -1,5 +1,47 @@
-$darkGray: #a9a9a9;
+@import "reset.scss";
 
-body {
-	background: $darkGray;
+$application-background: #a9a9a9;
+$border-color: #9C27B0;
+$border-hover-color: #3949AB;
+$button-background-color: #BA68C8;
+$button-hover-background-color: #CE93D8;
+$button-active-background-color: #4A148C;
+$button-hover-text-color: #C5CAE9;
+$text-error-color: #E53935;
+
+
+html {
+	padding: 1.4em; font-size: 10px;
 }
+
+.application { background: $application-background; box-sizing: border-box; }
+	.header {  }
+		.title { font-size: 2.4rem; font-weight: bold; line-height: 1.5em; letter-spacing: .2rem; }
+	.mainSection {  }
+		.description { margin: 1rem 0 1.5rem; }
+		.paintingForm { padding-bottom: 2rem; font-size: 1.4rem; line-height: 1.125em; }
+			.inputWrapper { display: inline-block; }
+				.paintingLabel {  }
+				.paintingInput { padding: .4rem 1rem; margin: 0 .6rem 0 0; line-height: 2.4rem; border-radius: .4rem;
+					border: .1rem solid $border-color; outline: none;
+					
+					&:hover { border-color: $border-hover-color; }
+					&:focus { padding: .3rem .9rem; border-width: .2rem; }
+				}
+				.inputContainer { display: inline-block; position: relative; }
+					.error { margin-top: .2rem; position: absolute; color: $text-error-color; }
+
+
+
+
+.text { font-size: 1.6rem; line-height: 1.35em; }
+.button { padding: 0 1.4rem; line-height: 3.2rem; border: .1rem solid $border-color; border-radius: .4rem;
+	background: $button-background-color; cursor: pointer; transition: background-color .333s; outline: none;
+	
+	&:hover { background: $button-hover-background-color; border-color: $border-hover-color; }
+	&:active, &:focus { background: $button-active-background-color; color: $button-hover-text-color; }
+}
+
+
+.painter { display: flex; flex-flow: row; flex-wrap: wrap; box-sizing: unset; }
+	.painter div { width: 1px; height: 1px; }
