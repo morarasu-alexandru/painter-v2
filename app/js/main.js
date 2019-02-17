@@ -117,7 +117,7 @@ const createPainter = (width, height, inserAfterElem) => {
   const numberOfCells = width * height;
   let painterElement = `<div id="painter" class="painter" style="width: ${width}px; height: ${height}px">`;
 
-  for (let i = 0; i <= numberOfCells; i++) {
+  for (let i = 0; i < numberOfCells; i++) {
     painterElement += '<div style="background-color: #fff"></div>'
   }
 
@@ -130,6 +130,12 @@ const createPainter = (width, height, inserAfterElem) => {
   document.getElementById('painter').addEventListener('click', (e) => {
     if (!e.target.id) {
       console.log(e.target.style.backgroundColor);
+      e.target.style.backgroundColor = 'rgba(0,0,0)';
+    }
+  });
+
+  document.getElementById('painter').addEventListener('mouseover', (e) => {
+    if (e.buttons === 1) {
       e.target.style.backgroundColor = 'rgba(0,0,0)';
     }
   })
