@@ -48,8 +48,6 @@ $submitPaintingButton.addEventListener('click', (e) => {
 
     clearPainterForm();
     createPainter(widthValuePainter, heightValuePainter, $paintingForm);
-
-    console.log('Submit');
   }
 
   e.preventDefault();
