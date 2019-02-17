@@ -35,13 +35,16 @@ html {
 
 
 .text { font-size: 1.6rem; line-height: 1.35em; }
-.button { padding: 0 1.4rem; line-height: 3.2rem; border: .1rem solid $border-color; border-radius: .4rem;
+.button { padding: 0 1.4rem; margin-right: 1rem; line-height: 3.2rem; border: .1rem solid $border-color; border-radius: .4rem;
 	background: $button-background-color; cursor: pointer; transition: background-color .333s; outline: none;
 	
 	&:hover { background: $button-hover-background-color; border-color: $border-hover-color; }
 	&:active, &:focus { background: $button-active-background-color; color: $button-hover-text-color; }
 }
 
+.painterContainer { display: inline-block; }
+	.painter { cursor: crosshair; }
+	.painterMenu { display: flex; align-items: center; justify-content: space-between; }
+		.painterMenuSection { display: flex; align-items: center; }
+			.painterColor { display: inline-block; margin-left: .4em; width: 1em; height: 1em; font-size: 3.2rem; }
 
-.painter { display: flex; flex-flow: row; flex-wrap: wrap; box-sizing: unset; }
-	.painter div { width: 1px; height: 1px; }

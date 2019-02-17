@@ -6,24 +6,21 @@ const $widthInput = document.getElementById('widthInput');
 const $heightInput = document.getElementById('heightInput');
 const $widthInputContainer = document.getElementById('widthInputContainer');
 const $heightInputContainer = document.getElementById('heightInputContainer');
-const $paintingSubmitButton = document.getElementById('paintingSubmitButton');
+const $submitPaintingButton = document.getElementById('submitPaintingButton');
+const $getMaxPaintingButton = document.getElementById('getMaxPaintingButton');
 
-const timer = 5000;
-
-
+let drawColor = 'rgb(0,0,0)';
 let widthValue, heightValue;
 
 // Event listeners
-$paintingSubmitButton.addEventListener('click', (e) => {
-  const htmlPadding = getElementPadding($html);
+$submitPaintingButton.addEventListener('click', (e) => {
   const painterMinWidth = 10;
   const painterMinHeight = 10;
-  const scrollSafetyDimensions = 20;
   let canCreatePainter = true;
+  const painterMaxWidth = calculatePainterMaxWidth();
+  const painterMaxHeight = calculatePainterMaxHeight();
 
   clearPainterFormErrorMessages();
-
-  const painterMaxWidth = getWindowWidth() - htmlPadding.left -  htmlPadding.right - scrollSafetyDimensions;
 
   if (!(widthValue >= painterMinWidth && widthValue <= painterMaxWidth)) {
     let text = isUndefinedOrNullOrEmptyString(widthValue)
@@ -34,10 +31,6 @@ $paintingSubmitButton.addEventListener('click', (e) => {
 
     canCreatePainter = false;
   }
-
-  const appCurrentHeight = getElementHeight($application);
-  const painterMaxHeight = getWindowHeight() - htmlPadding.top - htmlPadding.bottom - scrollSafetyDimensions
-    - appCurrentHeight;
 
   if (!(heightValue >= painterMinHeight && heightValue <= painterMaxHeight)) {
     let text = isUndefinedOrNullOrEmptyString(heightValue)
@@ -59,8 +52,16 @@ $paintingSubmitButton.addEventListener('click', (e) => {
     console.log('Submit');
   }
 
+  e.preventDefault();
+});
 
-  e.preventDefault()
+$getMaxPaintingButton.addEventListener('click', (e) => {
+  const painterWidth = calculatePainterMaxWidth();
+  const painterHeight = calculatePainterMaxHeight();
+
+  createPainter(painterWidth, painterHeight, $paintingForm);
+
+  e.preventDefault();
 });
 
 $widthInput.addEventListener('change', (e) => {
@@ -87,8 +88,6 @@ const getElementPadding = (element) => {
   };
 };
 
-const getElementWidth = (element) => parseInt(window.getComputedStyle(element).getPropertyValue('width').slice(0, -2));
-
 const getElementHeight = (element) => parseInt(window.getComputedStyle(element).getPropertyValue('height').slice(0, -2));
 
 const isUndefinedOrNullOrEmptyString = (inputVar) => typeof (inputVar) == 'undefined' || inputVar == null || inputVar === '';
@@ -104,39 +103,93 @@ const clearPainterFormErrorMessages = () => {
 };
 
 const clearPainterForm = () => {
-    widthValue = null;
-    heightValue = null;
+  widthValue = null;
+  heightValue = null;
 
-    $widthInput.value = '';
-    $heightInput.value = '';
+  $widthInput.value = '';
+  $heightInput.value = '';
 
-    clearPainterFormErrorMessages();
+  clearPainterFormErrorMessages();
 };
+
+const calculatePainterMaxWidth = () => {
+  const htmlPadding = getElementPadding($html);
+  const scrollSafetyDimensions = 17;
+
+  return getWindowWidth() - htmlPadding.left - htmlPadding.right - scrollSafetyDimensions;
+};
+
+const calculatePainterMaxHeight = () => {
+  const htmlPadding = getElementPadding($html);
+  const scrollSafetyDimensions = 17;
+  const additionalHeight = 30;
+  const appCurrentHeight = getElementHeight($application);
+
+  return getWindowHeight() - htmlPadding.top - htmlPadding.bottom - scrollSafetyDimensions
+    - appCurrentHeight - additionalHeight;
+};
+
+const getRandomRGBColor = () => `rgb(${generateRandomNumber(0, 255)}, ${generateRandomNumber(0, 255)}, ${generateRandomNumber(0, 255)})`;
+
+const generateRandomNumber = (startNumber, endNumber) => Math.floor(Math.random() * endNumber + startNumber);
 
 const createPainter = (width, height, inserAfterElem) => {
-  const numberOfCells = width * height;
-  let painterElement = `<div id="painter" class="painter" style="width: ${width}px; height: ${height}px">`;
+  const numberOfCellsOnRow = Math.floor(width / 10);
+  const numberOfCellsOnColumn = Math.floor(height / 10);
 
-  for (let i = 0; i < numberOfCells; i++) {
-    painterElement += '<div style="background-color: #fff"></div>'
+
+  let svgPainter = `<div id="painterContainer" class="painterContainer"><svg id="painter" class="painter" width="${width}" height="${height}" >`;
+
+  for (let i = 0; i < numberOfCellsOnRow; i++) {
+    for (let j = 0; j < numberOfCellsOnColumn; j++) {
+      svgPainter += `<rect x="${10 * i}" y="${10 * j}" width="10" height="10"
+        style="fill:rgb(255,255,255);stroke-width:1;stroke:rgb(50,50,50)"></rect>`;
+    }
   }
 
-  painterElement += '</div>';
+  svgPainter += "</svg></div>";
 
-  console.log('numberOfCells: ', numberOfCells);
+  inserAfterElem.insertAdjacentHTML('afterend', svgPainter);
 
-  inserAfterElem.insertAdjacentHTML('afterend', painterElement);
+  const $painter = document.getElementById('painter');
+  const $painterContainer = document.getElementById('painterContainer');
 
-  document.getElementById('painter').addEventListener('click', (e) => {
-    if (!e.target.id) {
-      console.log(e.target.style.backgroundColor);
-      e.target.style.backgroundColor = 'rgba(0,0,0)';
-    }
+  let painterMenu = `<div class="painterMenu">
+    <div class="painterMenuSection">
+      <button class="button" id="colorPickerMenu">Color picker</button>
+      <button class="button" id="generateRandomColorButton">Get random color</button>
+    </div>
+    <div class="painterMenuSection">
+      <span class="text">draw color:</span>
+      <div id="painterColor" class="painterColor" style="background-color: ${drawColor}"></div>
+    </div>
+  </div>`;
+
+  $painterContainer.insertAdjacentHTML('beforeend', painterMenu);
+
+  const $generateRandomColorButton = document.getElementById('generateRandomColorButton');
+  const $painterColor = document.getElementById('painterColor');
+
+  $painter.addEventListener('mousedown', () => {
+    $painter.addEventListener('mousemove', draw)
   });
 
-  document.getElementById('painter').addEventListener('mouseover', (e) => {
-    if (e.buttons === 1) {
-      e.target.style.backgroundColor = 'rgba(0,0,0)';
+  $painter.addEventListener('mouseup', () => {
+    $painter.removeEventListener('mousemove', draw);
+  });
+
+  $generateRandomColorButton.addEventListener('click', (e) => {
+    drawColor = getRandomRGBColor();
+
+    $painterColor.style.backgroundColor = drawColor;
+
+    e.preventDefault()
+  });
+
+  const draw = (e) => {
+    if (e.target.nodeName === "rect" && e.target.style.fill !== drawColor) {
+      e.target.style.fill = drawColor;
     }
-  })
+  }
 };
+
